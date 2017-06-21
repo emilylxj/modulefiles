@@ -1,0 +1,105 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+#
+conflict compiler/intel       
+
+
+proc ModulesHelp { } {
+	puts stderr  " 
+        Intel Cluster Studio XE 2016 
+           High Performance MPI Hybrid Cluster Development Suite to Scale Forward & Scale Faster 
+	Intel Cluster Studio XE 2013 Supports Shared, Distributed and Hybrid Memory Applications Scale Performance
+	 *Industry Leading Low Latency MPI Library 
+ 	 *High Performance C++ and Fortran Compilers
+	 *Native Profiling and Tuning of MPI Applications Now Includes Node Level Analysis
+	Scale Forward
+	 *Scale Up To 120K MPI Processes
+	 *High Performance Advanced Parallel Programming Models For Multicore & Many-core Architectures
+	Scale Efficiently
+	 *Rapid Performance Profiling for Identification of Application Hotspots
+	 *Threading and Memory Correctness Analysis at Every Node
+	 *Innovative Threading Assistant Analyzes and Identifies Areas of Code for Parallelization 
+           http://software.intel.com/en-us/intel-cluster-studio-xe 
+         "
+}
+module-whatis "Intel Parallel Studio XE 2016, icc/icpc/ifort/idb/ipp/mkl"
+
+
+setenv PRG_ENV intel-16
+
+
+setenv INTEL_HOME /pkg/intel/2016/compilers_and_libraries_2016.0.109/linux
+#setenv INTEL_HOME /pkg/intel/composerxe
+setenv INTEL_ARCH  intel64
+#setenv INTEL_LICENSE_FILE /pkg/intel/licenses
+setenv INTEL_LICENSE_FILE 27000@10.10.0.103
+#prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/lib/$env(INTEL_ARCH)
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/compiler/lib/$env(INTEL_ARCH)
+#idb
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/debugger/lib/$env(INTEL_ARCH)
+prepend-path NLSPATH $env(INTEL_HOME)/debugger/$env(INTEL_ARCH)/locale/%l_%t/%N
+#tbb
+prepend-path LIBRARY_PATH  $env(INTEL_HOME)/tbb/lib/$env(INTEL_ARCH)/gcc4.4
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/tbb/lib/$env(INTEL_ARCH)/gcc4.4
+prepend-path INCLUDE $env(INTEL_HOME)/tbb/include/tbb
+prepend-path CPATH $env(INTEL_HOME)/tbb/include/serial
+#mkl
+prepend-path LIBRARY_PATH  $env(INTEL_HOME)/mkl/lib/$env(INTEL_ARCH)
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/mkl/lib/$env(INTEL_ARCH)
+prepend-path NLSPATH $env(INTEL_HOME)/mkl/lib/$env(INTEL_ARCH)/locale/%l_%t/%N
+prepend-path INCLUDE $env(INTEL_HOME)/mkl/include
+prepend-path CPATH $env(INTEL_HOME)/mkl/include
+
+prepend-path FPATH $env(INTEL_HOME)/mkl/include
+prepend-path FPATH $env(INTEL_HOME)/mkl/include/$env(INTEL_ARCH)/lp64
+prepend-path FPATH $env(INTEL_HOME)/mkl/include/$env(INTEL_ARCH)/fftw
+setenv MKL_PATH $env(INTEL_HOME)/mkl
+setenv MKLROOT  $env(INTEL_HOME)/mkl
+
+#ipp
+prepend-path INCLUDE $env(INTEL_HOME)/ipp/include
+prepend-path LIBRARY_PATH  $env(INTEL_HOME)/ipp/lib/$env(INTEL_ARCH)
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/ipp/lib/$env(INTEL_ARCH)
+prepend-path NLSPATH $env(INTEL_HOME)/ipp/lib/$env(INTEL_ARCH)
+
+#mpirt
+#prepend-path PATH $env(INTEL_HOME)/mpirt/bin/$env(INTEL_ARCH)
+#prepend-path LIBRARY_PATH  $env(INTEL_HOME)/mpirt/lib/$env(INTEL_ARCH)
+
+
+##icc/icpc/ifort
+prepend-path PATH $env(INTEL_HOME)/bin/$env(INTEL_ARCH)
+#prepend-path LIBRARY_PATH  $env(INTEL_HOME)/lib/$env(INTEL_ARCH)
+#prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/lib/$env(INTEL_ARCH)
+#prepend-path NLSPATH $env(INTEL_HOME)/compiler/lib/$env(INTEL_ARCH)/locale/%l_%t/%N
+
+prepend-path MANPATH $env(INTEL_HOME)/man/en_US
+
+
+setenv MKL_C_FLAGS_I64  "-DMKL_ILP64 -I$env(MKLROOT)/include"
+
+setenv MKL_C_FLAGS  "-I$env(MKLROOT)/include"
+
+setenv MKL_LD_FLAGS_MT_I64  "$env(MKLROOT)/lib/intel64/libmkl_scalapack_ilp64.a  -Wl,--start-group  $env(MKLROOT)/lib/intel64/libmkl_cdft_core.a $env(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $env(MKLROOT)/lib/intel64/libmkl_intel_thread.a $env(MKLROOT)/lib/intel64/libmkl_core.a $env(MKLROOT)/lib/intel64/libmkl_blacs_intelmpi_ilp64.a -Wl,--end-group -openmp -lpthread -lm"
+setenv MKL_LD_FLAGS_MT  "$env(MKLROOT)/lib/intel64/libmkl_scalapack_lp64.a  -Wl,--start-group  $env(MKLROOT)/lib/intel64/libmkl_cdft_core.a $env(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $env(MKLROOT)/lib/intel64/libmkl_intel_thread.a $env(MKLROOT)/lib/intel64/libmkl_core.a $env(MKLROOT)/lib/intel64/libmkl_blacs_intelmpi_lp64.a -Wl,--end-group -openmp -lpthread -lm"
+
+setenv MKL_LD_FLAGS_SEQ  "-Wl,--start-group  $env(MKLROOT)/lib/intel64/libmkl_intel_lp64.a $env(MKLROOT)/lib/intel64/libmkl_sequential.a $env(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm"
+
+setenv MKL_LD_FLAGS_SEQ_I64  "-Wl,--start-group  $env(MKLROOT)/lib/intel64/libmkl_intel_ilp64.a $env(MKLROOT)/lib/intel64/libmkl_sequential.a $env(MKLROOT)/lib/intel64/libmkl_core.a -Wl,--end-group -lpthread -lm"
+
+
+set _ROOT $env(INTEL_HOME)/bin/$env(INTEL_ARCH)
+
+setenv CC $_ROOT/icc
+setenv CXX $_ROOT/icpc
+setenv FC $_ROOT/ifort
+setenv F77 $_ROOT/ifort
+#setenv F90 $_ROOT/ifort
+#setenv F95 $_ROOT/ifort
+
+#append-path MODULEPATH /pkg/modulefiles-prgenv/$env(PRG_ENV)
+#/pkg/intel/inspector_xe/bin64/
+#/pkg/intel/itac/8.1.0.024/bin/

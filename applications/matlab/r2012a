@@ -1,0 +1,15 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t Matlab-R2012a"
+}
+module-whatis "load Matlab version R2012a"
+
+
+set MATLAB_PREFIX /pkg/matlab/R2012a
+setenv MATLAB_DIR $MATLAB_PREFIX
+
+prepend-path PATH $MATLAB_PREFIX/bin

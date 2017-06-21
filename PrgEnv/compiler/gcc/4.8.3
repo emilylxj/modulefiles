@@ -1,0 +1,41 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+conflict compiler/gcc
+#onflict compiler/intel
+#onflict compiler/pgi
+#onflict compiler/lf95
+
+
+proc ModulesHelp { } {
+        puts stderr "\tgcc 4.8.2 - GNU C/C++ Progamming  Enviroment"
+}
+module-whatis "Programming Enviroment  GNU C/C++ 4.8.2"
+
+setenv PRG_ENV gcc-4.8
+
+set MODNAME gcc
+set VERSION 4.8.3
+
+set prefix /pkg/$MODNAME/$VERSION
+setenv  GNUPATH $prefix
+prepend-path PATH $prefix/bin
+prepend-path LIBRARY_PATH  $prefix/lib64
+prepend-path MANPATH $prefix/share/man
+prepend-path LD_LIBRARY_PATH  $prefix/lib64
+prepend-path LD_RUN_PATH $prefix/lib64
+prepend-path INCLUDE $prefix/include/c++/$VERSION
+
+
+#setenv CC $prefix/bin/gcc
+#setenv CXX $prefix/bin/g++
+#setenv FC $prefix/bin/gfortran
+#setenv F77 $prefix/bin/gfortran
+#setenv F90 $prefix/bin/gfortran
+#setenv F95 $prefix/bin/gfortran
+                                                                                                                                                              
+    

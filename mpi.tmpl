@@ -1,0 +1,76 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+conflict  mpi/openmpi mpi/mvapich mpi/impi
+
+#####################################################################
+# define
+set MODNAME openmpi
+set VERSION 1.10.1
+####################################################################
+
+setenv MPI_PRG_ENV ${MODNAME}-${VERSION}
+
+set PRG_ENV default
+
+set PKG /pkg
+
+if  [  info exists env(PKG)   ] { set PKG $env(PKG) }
+
+if  [  info exists env(PRG_ENV)   ] {  set PRG_ENV $env(PRG_ENV) }
+
+#if  [  info exists env(MPI_PRG_ENV)   ] {     set PRG_ENV ${PRG_ENV}/$env(MPI_PRG_ENV)  }
+
+set PREFIX   ${PKG}/${MODNAME}/${VERSION}/${PRG_ENV}
+
+
+if { ! [ file isdirectory ${PREFIX} ] } {
+
+  puts stderr  " ${MODNAME}-${VERSION} is not installed in \[ ${PREFIX} \] !! If you need it , please contect the site manager! "
+  
+  module-whatis   " ${MODNAME}-${VERSION} is not installed!!"
+
+  break  
+}
+
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+set UP_MODNAME [string toupper ${MODNAME}]
+
+setenv ${UP_MODNAME}_VERSION ${VERSION}
+setenv ${UP_MODNAME}_ROOT $PREFIX
+setenv ${UP_MODNAME}_DIR  $PREFIX
+setenv ${UP_MODNAME}_HOME  $PREFIX
+setenv ${UP_MODNAME}_PATH $PREFIX
+
+setenv MPI_VERSION ${MODNAME}-${VERSION}
+setenv MPI_ROOT $PREFIX
+setenv MPI_DIR  $PREFIX
+setenv MPI_HOME  $PREFIX
+setenv MPI_PATH $PREFIX
+
+###################################################################
+setenv OMPI_MCA_btl self,sm,openib
+setenv OMPI_MCA_coll_fca_enable 0
+###################################################################
+
+module-whatis   "${MODNAME}-${VERSION}/${PRG_ENV} is installed!!"
+
+
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    
+    puts stderr  "${MODNAME}-${VERSION} is installed by salmon!! 2015.11.25 "
+    return 1 
+}

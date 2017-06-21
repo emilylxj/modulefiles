@@ -1,0 +1,15 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t emacs-24"
+}
+module-whatis "load emacs version 24"
+
+
+set EMACS_PREFIX /pkg/emacs
+setenv EMACS_DIR $EMACS_PREFIX
+
+prepend-path PATH $EMACS_PREFIX/bin

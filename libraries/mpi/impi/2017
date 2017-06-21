@@ -1,0 +1,45 @@
+#%Module1.0
+#####################################################
+##
+##
+##
+module load compiler/intel/2017
+prereq compiler
+conflict mpi/openmpi mpi/mvapich mpi/impi
+
+proc ModulesHelp{ } {
+         puts stderr "Intel(R) MPI Library for Linux* 2017"
+
+}
+module-whatis "Intel MPI 5.1.1,which depends on compiler/intel/2017" 
+module-whatis " you must 'module load compiler/intel/2017' before!!!"
+
+
+set I_MPI_ROOT /pkg/intel/2017/compilers_and_libraries_2017.4.196/linux/mpi
+
+#add by salmon 2015.10.20
+set MODNAME impi
+set VERSION 2017
+setenv MPI_PRG_ENV ${MODNAME}-${VERSION}
+#########
+#
+setenv MPI_ROOT $env(I_MPI_ROOT)
+
+#setenv I_MPI_F90 ifort
+#setenv I_MPI_F77 ifort
+#setenv I_MPI_CC icc
+#setenv I_MPI_CXX icpc
+
+setenv I_MPI_FABRICS shm:ofa
+
+prepend-path PATH $env(I_MPI_ROOT)/intel64/bin
+
+prepend-path INCLUDE  $env(I_MPI_ROOT)/intel64/include
+
+prepend-path LD_LIBRARY_PATH  $env(I_MPI_ROOT)/intel64/lib
+
+prepend-path MANPATH  $env(I_MPI_ROOT)/man
+
+prepend-path        CLASSPATH              $env(I_MPI_ROOT)/intel64/lib/mpi.jar
+
+

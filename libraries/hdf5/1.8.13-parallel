@@ -1,0 +1,82 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+prereq compiler
+prereq mpi
+set MODNAME hdf5
+set VERSION 1.8.13-parallel
+
+set COMPILER default
+
+if  [  info exists env(PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ] {
+    set COMPILER $env(PRG_ENV)
+   }
+}
+#if  [  info exists env(MPI_PRG_ENV)   ] {
+#   if [ file isdirectory /pkg/$MODNAME/$VERSION/$COMPILER/$env(MPI_PRG_ENV) ] {
+#    set MPI_COMPILER $env(MPI_PRG_ENV)
+#   } else {
+#     set MPI_COMPILER nohave
+#     puts stderr " The directory /pkg/$MODNAME/$VERSION/$env(PRG_ENV)/$env(MPI_PRG_ENV) is not exited!! The hdf5 is not installed by $env(MPI_PRG_ENV)"
+#     break
+#} }
+
+#if  [  info exists env(MPI_PRG_ENV)   ] {
+#   if { [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ]  } {
+#    set MPI_COMPILER  $env(MPI_PRG_ENV)
+#   } else 
+#    {
+# puts stderr " The directory /pkg/$MODNAME/$VERSION/$env(PRG_ENV)/$env(MPI_PRG_ENV) is not exited!!"
+# If you need $env(PRG_ENV)/$env(MPI_PRG_ENV) version $MODNAME, please contect the cluster  manager!"
+#    }
+#}
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}/${COMPILER}/$env(MPI_PRG_ENV)
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+setenv HDF5_ROOT $PREFIX
+setenv HDF5_DIR  $PREFIX
+setenv HDF5_HOME $PREFIX
+setenv HDF5_PATH $PREFIX
+setenv HDF5_API  18
+setenv HDF5_CFLAGS      "-I$PREFIX/include"
+setenv HDF5_CLIBS       "-L$PREFIX/lib -lhdf5_hl -lhdf5 -lz -lm -lsz"
+setenv HDF5_FLIBS       "-L$PREFIX/lib -lhdf5_fortran -lhdf5_hl_fortran -lm -lsz  -lz"
+setenv HDF5_CXXLIBS     "-L$PREFIX/lib -lhdf5_hl_cpp -lhdf5_cpp -lz -lm -lsz"
+module-whatis   "${MODNAME}/$COMPILER is installed!!"
+
+} else {
+
+ puts stderr " ${MODNAME}/$COMPILER is not installed!! If you need $COMPILER version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+        break
+}
+
+
+
+
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global COMPILER
+    global MPI_COMPILER
+    global PREFIX
+    
+    puts stderr  "${MODNAME}-${VERSION}/${COMPILER} is installed on December 27, 2012 by liuxiaojuan!! "
+    return 1 
+}

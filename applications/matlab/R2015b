@@ -1,0 +1,15 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t Matlab-R2015b"
+}
+module-whatis "load Matlab version R2015b"
+
+
+set MATLAB_PREFIX /pkg/MATLAB/MATLAB/R2015b
+setenv MATLAB_DIR $MATLAB_PREFIX
+
+prepend-path PATH $MATLAB_PREFIX/bin

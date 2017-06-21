@@ -1,0 +1,52 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+
+conflict mpi/openmpi mpi/mvapich mpi/impi
+
+set helpmsg "The Open MPI Project is an open source MPI-2 implementation. http://www.open-mpi.org/"
+
+proc ModulesHelp { } {
+    global helpmsg
+    puts stderr  "\t$helpmsg\n"
+}
+
+set MODNAME openmpi-1.4.3
+set COMPILER gcc 
+setenv MPI_PRG_ENV openmpi-1.4.3
+#if  [ info exists env(PRG_ENV) ] {
+  
+#   set COMPILER $env(PRG_ENV)
+#} else {
+#   set COMPILER "default"
+#}
+
+ set PREFIX  /usr/mpi/$COMPILER/$MODNAME
+
+ if [ file isdirectory $PREFIX ]   {
+  prepend-path PATH $PREFIX/bin
+  prepend-path LIBRARY_PATH  $PREFIX/lib
+  prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+  prepend-path INCLUDE  $PREFIX/include
+  prepend-path MANPATH  $PREFIX/share/man
+  setenv MPI_ROOT $PREFIX
+  setenv MPI_DIR  $PREFIX
+  setenv MPI_PATH $PREFIX
+   setenv OMPI_MCA_btl self,sm,openib
+ #   setenv OMPI_MCA_btl ^openib
+  setenv OMPI_MCA_coll_fca_enable 0 
+  setenv OPAL_PKGDATADIR $PREFIX/share/openmpi
+
+  
+  module-whatis " ${MODNAME}/$COMPILER is installed!!"
+  set helpmsg "${MODNAME}/$COMPILER is available."
+
+ }  else {
+   module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+   set helpmsg  " ${MODNAME}/$COMPILER is not installed!!"
+   if [ expr [ module-info mode load ] || [ module-info mode display ] ]  {
+     puts stderr " ${MODNAME}/$COMPILER is not installed!! "
+   }
+ }

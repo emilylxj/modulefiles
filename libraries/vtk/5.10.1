@@ -1,0 +1,45 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+
+set MODNAME vtk
+set VERSION 5.10.1
+set MAJOR_VERSION 5.10
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+
+     module-whatis   ${MODNAME}-$VERSION
+
+} else {
+
+ puts stderr " ${MODNAME}-$VERSION is not installed!! If you need $COMPILER version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}-$VERSION is not installed!!"
+        break
+}
+
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib/$MODNAME-$MAJOR_VERSION
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib/$MODNAME-$MAJOR_VERSION
+
+prepend-path INCLUDE  $PREFIX/include/$MODNAME-$MAJOR_VERSION
+prepend-path PYTHONPATH  $PREFIX/lib/$env(PYTHON_VER)/site-packages/
+
+
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global COMPILER
+    global PREFIX
+    
+    puts stderr  "${MODNAME}-${VERSION} is installed by yuzhi on Wed Jun  5 13:13:32 CST 2013"
+    return 1 
+}

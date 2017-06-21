@@ -1,0 +1,27 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+
+conflict lua  
+
+set MODNAME lua
+set VERSION 5.2.3
+
+proc ModulesHelp { } {
+        puts stderr "\t$MODNAME $VERSION"
+}
+module-whatis "Programming Enviroment  $MODNAME $VERSION"
+
+
+set PREFIX /pkg/$MODNAME/$VERSION
+
+prepend-path PATH  $PREFIX/bin
+prepend-path MANPATH $PREFIX/share/man
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+setenv LUA_DIR $PREFIX
+                                                                                                                                                              
+    

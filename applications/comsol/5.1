@@ -1,0 +1,20 @@
+#%Module1.0
+#####################################################################
+##
+## by liuxj
+##
+proc ModulesHelp { } {
+        puts stderr "\t Vorpal"
+}
+module-whatis "comsol"
+
+
+#set _PREFIX /pkg/comsol/COMSOL44
+set _PREFIX /project/COMSOL/multiphysics
+setenv COMSOL_DIR $_PREFIX
+setenv LIBGL_DEBUG verbose
+prepend-path PATH $_PREFIX/bin
+prepend-path LD_LIBRARY_PATH  $_PREFIX/lib
+
+
+

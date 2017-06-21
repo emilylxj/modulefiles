@@ -1,0 +1,58 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+prereq compiler
+
+
+set MODNAME zlib
+set VERSION 1.2.8
+
+if { [ info exists env(PRG_ENV) ] } {
+     set COMPILER $env(PRG_ENV)
+} else {
+     set COMPILER gcc-4.4
+}
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}/$COMPILER
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+setenv ZLIB_ROOT $PREFIX
+setenv ZLIB_DIR  $PREFIX
+setenv ZLIB_HOME $PREFIX
+setenv ZLIB_PATH $PREFIX
+setenv ZLIB_CFLAGS      "-I$PREFIX/include"
+setenv ZLIB_LIBS       "-L$PREFIX/lib -lz"
+module-whatis   ${MODNAME}/$COMPILER
+
+} else {
+
+ puts stderr " ${MODNAME}/$COMPILER is not installed!! If you need $COMPILER version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+        break
+}
+
+
+
+
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global COMPILER
+    global PREFIX
+    
+    puts stderr  "${MODNAME}-${VERSION}/${COMPILER} is installed on Ocr 22, 2014 by liuxiaojuan!! "
+    return 1 
+}

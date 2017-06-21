@@ -1,0 +1,83 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+#prereq compiler
+#prereq  mpi
+
+set MODNAME fftw
+set VERSION 3.3.3-parallel
+
+set COMPILER default
+set MPI_COMPILER default-mpi
+
+if  [  info exists env(PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ] {
+    set COMPILER $env(PRG_ENV)
+   }
+}
+if  [  info exists env(MPI_PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$COMPILER/$env(MPI_PRG_ENV) ] {
+    set MPI_COMPILER $env(MPI_PRG_ENV)
+#   } else {
+ #    set MPI_COMPILER nohave
+  #   puts stderr " The directory /pkg/$MODNAME/$VERSION/$env(PRG_ENV)/$env(MPI_PRG_ENV) is not exited!! The $VERSION is not installed by $env(MPI_PRG_ENV)"
+   #  break
+} }
+
+#if  [  info exists env(MPI_PRG_ENV)   ] {
+#   if { [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ]  } {
+#    set MPI_COMPILER  $env(MPI_PRG_ENV)
+#   } else 
+#    {
+# puts stderr " The directory /pkg/$MODNAME/$VERSION/$env(PRG_ENV)/$env(MPI_PRG_ENV) is not exited!!"
+# If you need $env(PRG_ENV)/$env(MPI_PRG_ENV) version $MODNAME, please contect the cluster  manager!"
+#    }
+#}
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}/$COMPILER/${MPI_COMPILER}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+setenv FFTW_ROOT $PREFIX
+setenv FFTW_DIR  $PREFIX
+setenv FFTW_HOME $PREFIX
+setenv FFTW_PATH $PREFIX
+
+setenv FFTW_CFLAGS      "-I$PREFIX/include"
+setenv FFTW_DOUBLE_LIBS       "-L$PREFIX/lib -lfftw3 -lfftw3_mpi -lfftw3_omp -lfftw3_threads"
+setenv FFTW_FLOAT_LIBS       "-L$PREFIX/lib -lfftw3f -lfftw3f_mpi -lfftw3f_omp -lfftw3f_threads"
+module-whatis   "${MODNAME}/$COMPILER is installed!!"
+
+} else {
+
+ puts stderr " ${MODNAME}/${VERSION}/$COMPILER/${MPI_COMPILER} is not installed!! If you need $COMPILER version $MODNAME, please contect the cluster manager!"
+        module-whatis   " ${MODNAME}/${VERSION}/$COMPILER/${MPI_COMPILER} is not installed!!"
+        break
+}
+
+
+
+
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global COMPILER
+    global MPI_COMPILER
+    global PREFIX
+    
+    puts stderr  "${MODNAME}/${VERSION}/$COMPILER/${MPI_COMPILER} is installed on Oct 19, 2014 by liuxiaojuan!! "
+    return 1 
+}

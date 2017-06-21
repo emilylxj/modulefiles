@@ -1,0 +1,28 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+
+
+set MODNAME glib
+set VERSION 2.8
+
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include/glib-2.0/
+prepend-path INCLUDE  $PREFIX/include/glib-2.0/glib
+prepend-path INCLUDE  $PREFIX/include/glib-2.0/gobject
+prepend-path MANPATH  $PREFIX/share/man
+
+}

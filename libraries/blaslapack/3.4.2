@@ -1,0 +1,56 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+
+prereq compiler
+set MODNAME blaslapack
+set VERSION 3.4.2
+set  PREFIX   /pkg/${MODNAME}/${VERSION}/$env(PRG_ENV)
+
+
+if { ![ file isdirectory $PREFIX ] } {
+
+        puts stderr " ${MODNAME}/${VERSION}/$env(PRG_ENV) is not installed!! If you need '$env(PRG_ENV)' version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/${VERSION}/$env(PRG_ENV) is not installed!!"
+        break
+}
+
+module-whatis "${MODNAME}/${VERSION}/$env(PRG_ENV)"
+
+proc ModulesHelp { } {
+    global helpmsg
+    puts stderr  "BLAS/LAPACK — Linear Algebra PACKage"
+}
+
+
+if  [ info exists env(PRG_ENV) ] {
+  
+   set COMPILER $env(PRG_ENV)
+} else {
+   set COMPILER "default"
+}
+
+
+ if [ file isdirectory $PREFIX ]   {
+  prepend-path PATH $PREFIX/bin
+  prepend-path LIBRARY_PATH  $PREFIX/lib
+  prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+  prepend-path INCLUDE  $PREFIX/include
+ # prepend-path MANPATH  $PREFIX/share/man
+  setenv BLASLAPACK_ROOT $PREFIX
+  setenv BLASLAPACK_DIR  $PREFIX
+  setenv BLASLAPACK_PATH $PREFIX
+  setenv BLAS_LIBS "-L$PREFIX/lib -lblas"
+  setenv LAPACK_LIBS "-L$PREFIX/lib -llapack -lblas"
+  module-whatis " ${MODNAME}/$COMPILER is installed!!"
+  set helpmsg "${MODNAME}/$COMPILER is available."
+
+ }  else {
+   module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+   set helpmsg  " ${MODNAME}/$COMPILER is not installed!!"
+   if [ expr [ module-info mode load ] || [ module-info mode display ] ]  {
+     puts stderr " ${MODNAME}/$COMPILER is not installed!! "
+   }
+ }

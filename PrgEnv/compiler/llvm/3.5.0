@@ -1,0 +1,45 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+conflict llvm
+conflict gcc 
+conflict intel 
+conflict pgi
+conflict lf95
+
+proc ModulesHelp { } {
+        puts stderr "\t llvm/clang 3.4 -- C/C++ Progamming  Enviroment"
+}
+module-whatis "Programming Enviroment llvm/clang 3.4"
+
+setenv PRG_ENV llvm-3.4
+
+set MODNAME llvm
+set VERSION 3.5.0
+set PREFIX /pkg/$MODNAME/$VERSION
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  /pkg/gcc/4.9.1/lib64/
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path MANPATH $PREFIX/share/man
+prepend-path LD_LIBRARY_PATH /pkg/gcc/4.9.1/lib64/
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+
+
+prepend-path LD_RUN_PATH /pkg/gcc/4.9.1/libexec/gcc/x86_64-unknown-linux-gnu/4.9.1/:/pkg/gcc/4.9.1/lib64/
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE /pkg/gcc/4.9.1/include/c++/4.9.1/
+prepend-path INCLUDE $PREFIX/include/c++
+
+setenv CC $PREFIX/bin/clang
+setenv CXX $PREFIX/bin/clang++
+#setenv FC $PREFIX/bin/gfortran
+#setenv F77 $PREFIX/bin/gfortran
+#setenv F90 $PREFIX/bin/gfortran
+#setenv F95 $PREFIX/bin/gfortran
+                                                                                                                                                              
+    

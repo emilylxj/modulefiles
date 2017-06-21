@@ -1,0 +1,37 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+#
+
+conflict PrgEnv/gcc
+conflict PrgEnv/intel
+conflict PrgEnv/pgi
+#conflict PrgEnv/lf95
+
+
+proc ModulesHelp { } {
+	puts stderr "\t Lahey/Fujitsu Linux64 Fortran v8.1  "
+}
+module-whatis "lf95"
+
+setenv PRG_ENV lf95-8
+
+setenv LF95_HOME /pkg/lf95/8.1
+
+#append-path MODULEPATH /pkg/modulefiles-avail/lf95
+
+prepend-path PATH $env(LF95_HOME)/bin
+prepend-path LD_LIBRARY_PATH  $env(LF95_HOME)/lib64
+prepend-path INCLUDE $env(LF95_HOME)/include64
+prepend-path MANPATH $env(LF95_HOME)/manuals/man/lf64
+prepend-path MANPATH  $env(LF95_HOME)/manuals/man/ssl2 
+prepend-path PFDIR $env(LF95_HOME)/bin
+prepend-path WISK  $env(LF95_HOME)
+prepend-path LSEVERC $env(LF95_HOME)/bin/lserverc
+setenv FC $env(LF95_HOME)/bin/lf95
+setenv F77 $env(LF95_HOME)/bin/lf95
+setenv F90 $env(LF95_HOME)/bin/lf95
+
+

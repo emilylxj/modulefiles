@@ -1,0 +1,37 @@
+#%Module1.0
+#####################################################
+##
+##
+##
+module load compiler/intel/2015
+prereq compiler
+conflict mpi/openmpi mpi/mvapich mpi/impi
+
+proc ModulesHelp{ } {
+         puts stderr "Intel(R) MPI Library for Linux* 4.0.1.035"
+
+}
+module-whatis "Intel MPI 5.0.1,which depends on compiler/intel/2015" 
+
+setenv I_MPI_ROOT /pkg/intel/impi/5.0.1.035
+
+setenv MPI_ROOT $env(I_MPI_ROOT)
+set MODNAME impi
+set VERSION 5.0.1
+setenv MPI_PRG_ENV ${MODNAME}-${VERSION}
+#setenv I_MPI_F90 ifort
+#setenv I_MPI_F77 ifort
+#setenv I_MPI_CC icc
+#setenv I_MPI_CXX icpc
+
+setenv I_MPI_FABRICS shm:ofa
+
+prepend-path PATH $env(I_MPI_ROOT)/intel64/bin
+
+prepend-path LD_LIBRARY_PATH  $env(I_MPI_ROOT)/intel64/lib
+prepend-path LIBRARY_PATH  $env(I_MPI_ROOT)/intel64/lib
+prepend-path  INCLUDE $env(I_MPI_ROOT)/intel64/include
+prepend-path MANPATH  $env(I_MPI_ROOT)/man
+
+
+module-whatis " you must 'module load compiler/intel/2015' before!!!"

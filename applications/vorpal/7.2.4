@@ -1,0 +1,26 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t Vorpal"
+}
+module-whatis "Vorpal"
+
+
+set _PREFIX /pkg/vorpal/VSim-7.2.4-Linux64/Contents/engine
+setenv VORPAL_DIR $_PREFIX
+set-alias vsim /pkg/vorpal/VSim-7.2.4-Linux64/VSimComposer.sh
+
+prepend-path PATH $_PREFIX/bin
+
+prepend-path PATH $_PREFIX/../bin
+prepend-path LD_LIBRARY_PATH  $_PREFIX/lib
+append-path LD_LIBRARY_PATH $_PREFIX/../VisIt/2.6.3/linux-x86_64/lib
+
+setenv PYTHONHOME /pkg/vorpal/VSim-7.2.4-Linux64/Contents/VisIt/2.6.3/linux-x86_64/lib/python/
+setenv  PYTHONPATH  /pkg/vorpal/VSim-7.2.4-Linux64/Contents/VisIt/2.6.3/linux-x86_64/lib/python/lib/python2.7
+#prepend-path PYTHONPATH $_PREFIX/lib/python2.7/site-packages/numpy
+#prepend-path PYTHONPATH $_PREFIX/lib/python2.7/site-packages/tables
+setenv OPAL_PREFIX $_PREFIX

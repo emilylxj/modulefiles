@@ -1,0 +1,15 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t Matlab-R2013a"
+}
+module-whatis "load Matlab version R2013a"
+
+
+set MATLAB_PREFIX /pkg/matlab/R2013a
+setenv MATLAB_DIR $MATLAB_PREFIX
+#setenv Matlab "$MATLAB_PREFIX/bin/matlab -singleCompThread"
+prepend-path PATH $MATLAB_PREFIX/bin

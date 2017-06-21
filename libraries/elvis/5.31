@@ -1,0 +1,34 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+#prereq compiler
+
+
+set MODNAME Elvis
+set VERSION 5.31
+
+
+set PREFIX   /pkg/${MODNAME}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+prepend-path PATH $PREFIX
+
+module-whatis   ${MODNAME}/$VERSION
+set-alias elvis "java -jar $PREFIX/elvis.jar"
+
+
+
+
+}
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global PREFIX
+    
+}

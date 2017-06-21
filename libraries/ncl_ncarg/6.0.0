@@ -1,0 +1,22 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "NCL_NCARG"
+}
+module-whatis "NCL_NCARG"
+
+setenv NCARG_ROOT /pkg/ncl_ncarg/6.0.0
+setenv NCARG_DIR  $env(NCARG_ROOT)
+prepend-path PATH $env(NCARG_ROOT)/bin
+prepend-path NCARG_LIB $env(NCARG_ROOT)/lib
+prepend-path LIBRARY_PATH  $env(NCARG_ROOT)/lib
+prepend-path LD_LIBRARY_PATH  $env(NCARG_ROOT)/lib
+prepend-path INCLUDE  $env(NCARG_ROOT)/include
+prepend-path MANPATH  $env(NCARG_ROOT)/man
+setenv  NCARG_DATABASE $env(NCARG_ROOT)/lib/database
+setenv NCARG_FONTCAPS $env(NCARG_ROOT)/lib/fontcaps
+setenv NCARG_GRAPHCAPS $env(NCARG_ROOT)/lib/graphcaps
+

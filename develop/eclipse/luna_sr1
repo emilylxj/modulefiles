@@ -1,0 +1,16 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t Matlab"
+}
+module-whatis "eclipse"
+
+set _ROOT /pkg/eclipse/luna_sr1/
+prepend-path PATH $_ROOT
+#prepend-path LIBRARY_PATH  $_ROOT/lib
+#prepend-path LD_LIBRARY_PATH  $_ROOT/lib
+#prepend-path MANPATH $_ROOT/man
+

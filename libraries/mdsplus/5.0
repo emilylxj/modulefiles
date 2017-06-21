@@ -1,0 +1,63 @@
+#%Module1.0
+#####################################################################
+##
+## 
+## by liuxj
+##
+
+#prereq compiler
+
+set MODNAME mdsplus
+set VERSION 5.0
+#if { [ info exists env(PRG_ENV) ] } {
+#     set COMPILER $env(PRG_ENV)
+#} else {
+#     set COMPILER gcc-4.4
+#}
+set COMPILER default 
+
+if  [  info exists env(PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ] {
+    set COMPILER $env(PRG_ENV)
+
+   } }
+
+set  PREFIX   /pkg/${MODNAME}/${VERSION}/$COMPILER
+
+if { ![ file isdirectory $PREFIX ] } {
+
+        puts stderr " ${MODNAME}/${VERSION}/$env(PRG_ENV) is not installed!! If you need '$env(PRG_ENV)' version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/${VERSION}/$env(PRG_ENV) is not installed!!"
+        break
+}
+module-whatis "${MODNAME}/${VERSION}/$COMPILER"
+
+proc ModulesHelp { } {
+    global MODNAME
+      puts stderr  "${MODNAME}/$env(PRG_ENV) is installed!!"
+    return 1
+}
+
+setenv MDSPLUS_ROOT $PREFIX
+setenv MDSPLUS_DIR  $env(MDSPLUS_ROOT)
+setenv MDSPLUS_HOME $env(MDSPLUS_ROOT)
+setenv MDS_PATH $env(MDSPLUS_ROOT)/tdi
+prepend-path PATH $env(MDSPLUS_ROOT)/bin
+prepend-path LIBRARY_PATH  $env(MDSPLUS_ROOT)/lib
+prepend-path LD_LIBRARY_PATH  $env(MDSPLUS_ROOT)/lib
+prepend-path INCLUDE  $env(MDSPLUS_ROOT)/include
+prepend-path MANPATH  $env(MDSPLUS_ROOT)/man
+prepend-path IDLPATH  $PREFIX/idl
+#setenv MATLABPATH $env(MDSPLUS_ROOT)/matlab
+
+setenv MDSPLUS $env(MDSPLUS_ROOT)
+setenv MATLABPATH $env(MDSPLUS_ROOT)/matlab
+setenv MDSPLUS_LIBS "-L$PREFIX/lib -lMdsLib"
+proc ModulesHelp { } {
+    global MODNAME
+    global VERSION
+   
+      puts stderr  "${MODNAME}-${VERSION}/gcc-4.4  is installed  on January 24 2013 by liuxiaojuan!!The configure is./configure  --prefix=/pkg/mdsplus/5.0/gcc-4.4"
+    return 1
+}
+

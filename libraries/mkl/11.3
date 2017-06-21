@@ -1,0 +1,28 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+	puts stderr "\tmkl - Intel Math Kernel Library for Linux"
+}
+module-whatis "intel MKL"
+
+
+#module use --append /usr/local/Modules/modulefiles.available/compiler.dep
+
+setenv INTEL_HOME /pkg/intel/2016/mkl/lib
+setenv INTEL_ARCH  intel64
+setenv MKL_ARCH intel64
+setenv MKL_PATH $env(INTEL_HOME)/mkl
+setenv MKL_ROOT  $env(INTEL_HOME)/mkl
+
+setenv INTEL_LICENSE_FILE /pkg/intel/licenses
+
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/mkl/lib/$env(MKL_ARCH)
+prepend-path LD_LIBRARY_PATH  $env(INTEL_HOME)/lib/$env(INTEL_ARCH)
+
+prepend-path INCLUDE $env(INTEL_HOME)/mkl/include
+
+
+

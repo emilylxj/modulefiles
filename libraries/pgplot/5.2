@@ -1,0 +1,49 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+
+#prereq compiler
+set helpmsg "The PGPLOT Graphics Subroutine Library is a Fortran- or C-callable, device-independent graphics package for making simple scientific graphs. http://www.astro.caltech.edu/~tjp/pgplot/."
+
+proc ModulesHelp { } {
+    global helpmsg
+    puts stderr  "\t$helpmsg\n"
+}
+
+set MODNAME pgplot
+set VERSION 5.2
+set COMPILER default
+#if  [ info exists env(PRG_ENV) ] {
+  
+#   set COMPILER $env(PRG_ENV)
+#} else {
+#   set COMPILER "gcc-4.4"
+#}
+if  [  info exists env(PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ] {
+    set COMPILER $env(PRG_ENV)
+
+   } }
+ set PREFIX  /pkg/$MODNAME/$VERSION/$COMPILER
+
+ if [ file isdirectory $PREFIX ]   {
+  prepend-path PATH $PREFIX
+  prepend-path LIBRARY_PATH  $PREFIX
+  prepend-path LD_LIBRARY_PATH  $PREFIX
+  setenv PGPLOT_DIR  $PREFIX
+  setenv PGPLOT_HOME  $PREFIX
+  setenv PGPLOT_DEV  "/XWINDOW"
+  setenv PGPLOT_LIBS " -L$PREFIX -lpgplot -lpng -lX11 "
+  
+  module-whatis " ${MODNAME}/$COMPILER is installed!!"
+  set helpmsg "${MODNAME}/$COMPILER is available."
+
+ }  else {
+   module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+   set helpmsg  " ${MODNAME}/$COMPILER is not installed!!"
+   if [ expr [ module-info mode load ] || [ module-info mode display ] ]  {
+     puts stderr " ${MODNAME}/$COMPILER is not installed!! "
+   }
+ }

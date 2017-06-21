@@ -1,0 +1,32 @@
+#%Module1.0
+
+#####################################################################
+##
+## by Salmon
+##
+
+set MODNAME cmake
+set VERSION 3.5.2
+set PREFIX   /pkg/${MODNAME}/${VERSION}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+} else {
+proc ModulesHelp { } { 
+    global MODNAME	
+    global VERSION
+    global COMPILER
+    global PREFIX
+    
+    puts stderr  "${MODNAME}-${VERSION} is installed on Ocr 20 2015 by salmon i!! "
+    return 1 
+}
+}

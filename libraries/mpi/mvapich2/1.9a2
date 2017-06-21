@@ -1,0 +1,39 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+
+prereq compiler
+
+set MODNAME mvapich2
+set VERSION 1.9a2
+set PREFIX  /pkg/$MODNAME/$VERSION/$env(PRG_ENV)
+
+
+if { ![ file isdirectory $PREFIX ] } {
+
+        puts stderr " ${MODNAME}/$env(PRG_ENV) is not installed!! If you need '$env(PRG_ENV)' version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/$env(PRG_ENV) is not installed!!"
+        break
+}
+
+module-whatis   ${MODNAME}/$env(PRG_ENV)
+proc ModulesHelp { } {
+    global MODNAME
+      puts stderr  "${MODNAME}/$env(PRG_ENV) is installed!!"
+    return 1
+}
+
+
+
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+setenv MPI_ROOT $PREFIX
+setenv MPI_DIR  $PREFIX
+setenv MPI_PATH $PREFIX
+                          

@@ -1,0 +1,48 @@
+#%Module1.0
+#####################################################################
+##
+## by liuxj on 11 03 2015
+##
+#module purge
+#module load  compiler/intel/2015 mpi/openmpi/1.6.5  hdf5/1.8.10-parallel fftw/3.3.3 netcdf/4.1.3-hp 
+
+set helpmsg "PETSc  — Prtable, Extensible Toolkit for Scientific ComputationLinear Algebra PACKage "
+
+proc ModulesHelp { } {
+    global helpmsg
+    puts stderr  "\t$helpmsg\n"
+}
+
+set MODNAME petsc/3.5
+
+if  [ info exists env(PRG_ENV) ] {
+
+   set COMPILER $env(PRG_ENV)
+} else {
+   set COMPILER "default"
+}
+
+ set PREFIX  /pkg/$MODNAME/$COMPILER
+
+ if [ file isdirectory $PREFIX ]   {
+
+  prepend-path PATH $PREFIX/bin
+  prepend-path LIBRARY_PATH  $PREFIX/lib
+  prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+  prepend-path INCLUDE  $PREFIX/include
+ # prepend-path MANPATH  $PREFIX/share/man
+  setenv PETSC_ROOT $PREFIX
+  setenv PETSC_DIR  $PREFIX
+  setenv PETSC_PATH $PREFIX
+  setenv PETSC_ARCH  linux-gcc-openmpi
+  module-whatis " ${MODNAME}/$COMPILER is installed!!"
+  set helpmsg "${MODNAME}/$COMPILER is available."
+
+ }  else {
+   module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+   set helpmsg  " ${MODNAME}/$COMPILER is not installed!!"
+   if [ expr [ module-info mode load ] || [ module-info mode display ] ]  {
+     puts stderr " ${MODNAME}/$COMPILER is not installed!! "
+   }
+ }
+

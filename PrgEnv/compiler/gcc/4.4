@@ -1,0 +1,37 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+
+conflict compiler/gcc
+#conflict compiler/intel
+#conflict compiler/pgi
+#conflict compiler/lf95
+
+proc ModulesHelp { } {
+        puts stderr "\tgcc 4.4.7 - GNU C/C++/Fortran Progamming  Enviroment"
+}
+module-whatis "Programming Enviroment  GNU C/C++/Fortran 4.4.7"
+
+setenv PRG_ENV gcc-4.4
+
+set prefix /usr
+setenv GNUPATH $prefix
+#prepend-path PATH $prefix/bin
+#prepend-path LIBRARY_PATH  $prefix/lib64
+#prepend-path MANPATH $prefix/share/man
+#prepend-path LD_LIBRARY_PATH  $prefix/lib64
+
+
+#setenv CC $prefix/bin/gcc
+#setenv CXX $prefix/bin/g++
+#setenv FC $prefix/bin/gfortran
+#setenv F77 $prefix/bin/gfortran
+#setenv F90 $prefix/bin/gfortran
+#setenv F95 $prefix/bin/gfortran
+
+                                                                                                                                                              
+    

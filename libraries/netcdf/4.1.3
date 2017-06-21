@@ -1,0 +1,71 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+
+module load hdf5/1.8.10
+#prereq compiler
+
+set MODNAME netcdf
+set VERSION 4.1.3
+set COMPILER default
+
+
+if  [  info exists env(PRG_ENV)   ] {
+   if [ file isdirectory /pkg/$MODNAME/$VERSION/$env(PRG_ENV) ] {
+    set COMPILER $env(PRG_ENV)
+
+   } }
+#if { [ info exists env(PRG_ENV) ] } {
+#     set COMPILER $env(PRG_ENV)
+#} else {
+#     set COMPILER gcc-4.4
+#}
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}/$COMPILER
+
+
+if { [ file isdirectory $PREFIX ] } {
+
+     module-whatis   ${MODNAME}/$COMPILER
+
+
+} else {
+        puts stderr " ${MODNAME}/$COMPILER is not installed!! If you need $COMPILER version $MODNAME, please contect the site manager!"
+        module-whatis   " ${MODNAME}/$COMPILER is not installed!!"
+        break
+}
+
+
+     prepend-path PATH $PREFIX/bin
+     prepend-path LIBRARY_PATH  $PREFIX/lib
+     prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+     prepend-path LD_RUN_PATH  $PREFIX/lib
+     prepend-path INCLUDE  $PREFIX/include
+     prepend-path MANPATH  $PREFIX/share/man
+
+     setenv NETCDF_ROOT $PREFIX
+     setenv NETCDF4_ROOT $PREFIX
+     setenv NETCDF4_DIR  $PREFIX
+
+     setenv NETCDF_DIR  $PREFIX
+     setenv NETCDF_PATH $PREFIX
+     setenv NETCDF_CFLAGS "-I$PREFIX/include $env(HDF5_CFLAGS)" 
+     setenv NETCDF_CLIBS "-L$PREFIX/lib -lnetcdf $env(HDF5_CLIBS)"
+     setenv NETCDF_FLIBS "-L$PREFIX/lib -lnetcdff $env(HDF5_FLIBS)"
+     setenv NETCDF_CXX4LIBS "-L$PREFIX/lib -lnetcdf_c++4 -lnetcdf $env(HDF5_CXXLIBS)"
+     setenv NETCDF_CXXLIBS "-L$PREFIX/lib -lnetcdf_c++ -lnetcdf $env(HDF5_CXXLIBS)"
+ 
+
+
+
+proc ModulesHelp { } {
+    global MODNAME
+    global VERSION
+    global COMPILER
+    global PREFIX
+
+     puts stderr  "${MODNAME}-${VERSION}/${COMPILER} is installed on Oct 18, 2014 by liuxiaojuan!!          The confogure  command is CPPFLAGS='-I/pkg/zlib/include -I/pkg/hdf5/1.8.10/'${PRG_ENV}'/include' LDFLAGS='-L//pkg/zlib/lib -L/pkg/hdf5/1.8.10/'${PRG_ENV}'/lib' ./configure   --prefix=/pkg/netcdf/4.1.3/$PRG_ENV --enable-shared --enable-cxx-4 --enable-fortran --enable-cxx  --enable-static --enable-netcdf-4   --disable-dap >&configure1.log &"
+    return 1
+}

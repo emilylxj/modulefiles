@@ -1,0 +1,37 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+
+conflict python  
+
+set MODNAME python
+set VERSION 2.7.8
+
+proc ModulesHelp { } {
+        puts stderr "\t$MODNAME $VERSION"
+}
+module-whatis "Programming Enviroment  $MODNAME $VERSION"
+
+setenv PYTHON_VER python2.7
+
+set PREFIX /pkg/$MODNAME/$VERSION
+#setenv PYTHONPATH $PREFIX
+setenv PYTHONHOME $PREFIX
+setenv PYTHON_EXE $PREFIX/bin/$env(PYTHON_VER)
+
+prepend-path PATH  $PREFIX/bin
+prepend-path MANPATH $PREFIX/share/man
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+
+# set module path
+setenv PYTHON_MOD_PATH  /pkg/python-modules/
+prepend-path PATH  $env(PYTHON_MOD_PATH)/lib/$env(PYTHON_VER)/site-packages
+prepend-path PYTHONPATH $env(PYTHON_MOD_PATH)/lib/$env(PYTHON_VER)/site-packages
+prepend-path PYTHONPATH $env(PYTHONHOME)/lib/$env(PYTHON_VER)/site-packages/
+
+                                                                                                                                                              
+    

@@ -1,0 +1,34 @@
+#%Module2.0
+#####################################################################
+##
+## by Salmon
+##
+##
+
+
+conflict python  
+
+set version 3.3.2
+
+proc ModulesHelp { } {
+        puts stderr "\tPython $version"
+}
+module-whatis "Programming Enviroment  Python $version"
+
+setenv PYTHON_VER python3.3
+
+set PREFIX /pkg/python/$version
+
+setenv PYTHONHOME $PREFIX
+setenv PYTHON_EXE $PREFIX/bin/$env(PYTHON_VER)
+
+prepend-path PATH  $PREFIX/bin
+prepend-path MANPATH $PREFIX/share/man
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+
+# set module path
+setenv PYTHON_MOD_PATH  /pkg/python-libs
+prepend-path PYTHONPATH $env(PYTHON_MOD_PATH)/lib/$env(PYTHON_VER)/site-packages
+
+                                                                                                                                                              
+    

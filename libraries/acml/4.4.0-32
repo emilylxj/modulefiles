@@ -1,0 +1,29 @@
+#%Module1.0
+#####################################################################
+##
+## by salmon 2014.11.20
+#
+
+set MODNAME acml
+set VERSION 4.4.0
+set ARCH gfortran32
+
+set COMPILER default
+
+
+proc ModulesHelp { } {
+	puts stderr "\tAMD Core Math Library (ACML)"
+}
+module-whatis "AMD Core Math Library (ACML),we have install the different versions.if you want to use it ,you must load the relevant complier!"
+
+
+set _ROOT /pkg/${MODNAME}/${VERSION}/${ARCH}
+
+setenv ACML_HOME $_ROOT
+
+setenv ACMLDIR $_ROOT
+
+setenv ACML_DIR $_ROOT
+
+prepend-path LD_LIBRARY_PATH  $_ROOT/lib/
+prepend-path INCLUDE $_ROOT/include/

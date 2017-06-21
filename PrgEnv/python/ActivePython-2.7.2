@@ -1,0 +1,22 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\tpython  - 2.x"
+}
+module-whatis "Python 2.x"
+
+set _ROOT /project/imd/python/ActivePython-2.7
+
+#setenv PYTHONHOME $_ROOT
+#setenv PYTHON_INCLUDE_DIRS $_ROOT/include
+
+prepend-path PATH $_ROOT/bin
+prepend-path LIBRARY_PATH  $_ROOT/lib
+prepend-path LD_LIBRARY_PATH  $_ROOT/lib/
+prepend-path INCLUDE  $_ROOT/include/
+prepend-path MANPATH  $_ROOT/share/man
+
+

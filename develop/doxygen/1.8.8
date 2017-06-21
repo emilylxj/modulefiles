@@ -1,0 +1,37 @@
+#%Module1.0
+#####################################################################
+##
+## by Salmon
+##
+proc ModulesHelp { } {
+        puts stderr "\t doxygen"
+}
+module-whatis "doxygen"
+
+set MODNAME doxygen
+set VERSION 1.8.8
+
+set PREFIX   /pkg/${MODNAME}/${VERSION}
+
+
+
+if { [ file isdirectory $PREFIX ] } {
+prepend-path PATH $PREFIX/bin
+prepend-path LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_LIBRARY_PATH  $PREFIX/lib
+prepend-path LD_RUN_PATH $PREFIX/lib
+prepend-path INCLUDE  $PREFIX/include
+prepend-path MANPATH  $PREFIX/share/man
+
+} else {
+proc ModulesHelp { } {
+    global MODNAME
+    global VERSION
+    global COMPILER
+    global PREFIX
+
+    puts stderr  "${MODNAME}-${VERSION} is installed on Ocr 26, 2014 by yuzhi!! "
+    return 1
+}
+}
+
